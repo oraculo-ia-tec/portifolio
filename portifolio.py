@@ -1,16 +1,164 @@
-import base64
+﻿import base64
 from html import escape
 from pathlib import Path
 
 import streamlit as st
 
+# =============================================================================
+# CONFIG
+# =============================================================================
 st.set_page_config(
-    page_title="William Eustáquio | Desenvolvedor de IA",
+    page_title="William Eustáquio | Desenvolvedor Python & IA",
     page_icon="🚀",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed",
+    menu_items={
+        "About": "Portfólio profissional de William Eustáquio — Desenvolvedor Python, "
+                 "Automação e Inteligência Artificial."
+    }
 )
 
+# =============================================================================
+# DADOS
+# =============================================================================
+NOME = "William Eustáquio"
+CARGO = "Desenvolvedor Python • Automação & IA"
+TAGLINE = (
+    "Construo sistemas, APIs e agentes de IA que automatizam processos, "
+    "reduzem custos operacionais e aceleram a tomada de decisão das empresas."
+    "Estou cursando Inteligência Artificial e Machine Learning na Faculdade Uniasselvi."
+)
+
+EMAIL = "williamllider@gmail.com"
+TELEFONE_DISPLAY = "(31) 99841-7976"
+WHATSAPP_URL = "https://wa.me/5531998417976"
+LINKEDIN_URL = "https://linkedin.com/in/william-silva-40888223a"
+LOCALIZACAO = "Eldorado, Contagem — MG"
+
+METRICAS = [
+    ("4+", "Anos de experiência"),
+    ("10+", "Projetos entregues"),
+    ("8+", "Certificações técnicas"),
+    ("100%", "Foco em resultado"),
+]
+
+SERVICOS = [
+    {
+        "icone": "⚙️",
+        "titulo": "Automação de Processos",
+        "desc": "Robôs e integrações que eliminam tarefas repetitivas, "
+                "reduzem erros e liberam o time para o que importa.",
+        "tags": ["Python", "Make", "APIs", "RPA"],
+    },
+    {
+        "icone": "🚀",
+        "titulo": "APIs & Backend Escalável",
+        "desc": "APIs modernas com FastAPI/Django, banco de dados otimizado "
+                "e arquitetura pronta para crescer com seu negócio.",
+        "tags": ["FastAPI", "Django", "PostgreSQL", "SQLAlchemy"],
+    },
+    {
+        "icone": "🤖",
+        "titulo": "Agentes de IA & Chatbots",
+        "desc": "Atendimento, vendas e análise 24/7 com agentes inteligentes "
+                "integrados ao WhatsApp, web e sistemas internos.",
+        "tags": ["LLMs", "MCP", "RAG", "Streamlit"],
+    },
+    {
+        "icone": "📊",
+        "titulo": "Dashboards & Análise de Dados",
+        "desc": "Visualização de dados clara e acionável para diretores "
+                "tomarem decisões com base em informação, não em achismo.",
+        "tags": ["Streamlit", "Pandas", "SQL", "Power Query"],
+    },
+]
+
+PROJETOS = [
+    {
+        "titulo": "Cripto Bot",
+        "desc": "Analista sênior de criptoativos com IA — DeFi, pools de liquidez "
+                "e estratégias de Day Trade com recomendações personalizadas.",
+        "tags": ["Streamlit", "IA", "Finanças", "Análise"],
+        "url": "https://cripto-bot.streamlit.app",
+        "imagem": "perfil/crypto-bot.png",
+        "categoria": "Fintech / IA",
+    },
+    {
+        "titulo": "Chef Delivery",
+        "desc": "Agente de IA para vendas online de carnes — sustenta centenas de "
+                "atendimentos simultâneos 24/7 sem pausas humanas.",
+        "tags": ["Agente IA", "Vendas", "WhatsApp", "Atendimento"],
+        "url": "https://chef-delivery.streamlit.app",
+        "imagem": "perfil/chef-delivery.png",
+        "categoria": "Vendas / Conversacional",
+    },
+    {
+        "titulo": "Oráculo Analista",
+        "desc": "Especialista em análise de dados via IA — upload de arquivos, "
+                "perguntas em linguagem natural e diagnósticos objetivos.",
+        "tags": ["IA", "Dados", "RAG", "Streamlit"],
+        "url": "https://oraculo-studant.streamlit.app/",
+        "imagem": "perfil/oraculo-analista-home1.png",
+        "categoria": "Data / IA",
+    },
+    {
+        "titulo": "Agente de E-mail",
+        "desc": "Automação inteligente de e-mails — leitura, classificação, "
+                "resposta e roteamento de mensagens com IA aplicada.",
+        "tags": ["Automação", "IA", "Produtividade", "Integração"],
+        "url": "#",
+        "imagem": "perfil/agente-email.png",
+        "categoria": "Automação / IA",
+    },
+]
+
+EXPERIENCIAS = [
+    {
+        "cargo": "Programador de Sistema de Gestão (MarketUp)",
+        "empresa": "Brasil Ferro e Aço",
+        "periodo": "09/2021 — 09/2023",
+        "desc": "Implantação e configuração do sistema MarketUp; gestão dos módulos "
+                "de clientes, produtos, estoque, financeiro, NF-e e RH; treinamento "
+                "e suporte remoto. Resultado: redução de erros operacionais e "
+                "aumento de produtividade do time.",
+    },
+    {
+        "cargo": "Inspetor de Qualidade",
+        "empresa": "Vallourec — Soluções Tubulares do Brasil",
+        "periodo": "09/2017 — 09/2019",
+        "desc": "Inspeção técnica de tubos, testes de conformidade, medições com "
+                "instrumentos de metrologia e apoio à melhoria contínua na produção.",
+    },
+]
+
+CERTIFICADOS = [
+    ("Programação em Python — do básico ao avançado",
+     "Geek University", "20/09/2021 — 14/03/2022", "64h"),
+    ("Programação Web com Python e Django Framework",
+     "Geek University", "08/02/2022 — 30/04/2022", "35,5h"),
+    ("FastAPI — APIs Modernas e Assíncronas com Python",
+     "Geek University", "28/05/2022 — 17/02/2025", "12h"),
+    ("FastAPI — Websites Modernos e Assíncronos com Python",
+     "Geek University", "29/01/2024 — 17/02/2024", "14h"),
+    ("SQLAlchemy: Essencial", "Geek University", "08/06/2023 — 21/02/2024", "15h"),
+    ("Amazon Web Services: Essencial", "Geek University",
+     "30/04/2025 — 22/06/2025", "12,5h"),
+    ("Visualização de Dados com Python",
+     "Geek University", "20/08/2025 — 25/08/2025", "6h"),
+    ("SQL e Power Query", "Empowerdata", "2021", "8,5h"),
+]
+
+STACK = {
+    "Linguagens": ["Python", "SQL", "JavaScript", "HTML/CSS"],
+    "Backend & APIs": ["FastAPI", "Django", "SQLAlchemy", "REST"],
+    "IA & Automação": ["Agentes de IA", "MCP Server", "Chatbots", "Make"],
+    "Dados & Cloud": ["PostgreSQL", "MySQL", "AWS", "Streamlit"],
+    "Ferramentas": ["Git", "SAP", "MarketUp", "Trello"],
+}
+
+# =============================================================================
+# UTILS
+# =============================================================================
 pdf_path = Path("Curriculo_Moderno_William_Eustaquio.pdf")
 pdf_bytes = pdf_path.read_bytes() if pdf_path.exists() else None
 
@@ -19,965 +167,1199 @@ def image_to_data_uri(path: str) -> str | None:
     image_path = Path(path)
     if not image_path.exists():
         return None
-
-    mime_types = {
-        ".png": "image/png",
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".webp": "image/webp",
-    }
-    mime_type = mime_types.get(image_path.suffix.lower())
-    if not mime_type:
+    mimes = {".png": "image/png", ".jpg": "image/jpeg",
+             ".jpeg": "image/jpeg", ".webp": "image/webp"}
+    mime = mimes.get(image_path.suffix.lower())
+    if not mime:
         return None
-
     encoded = base64.b64encode(image_path.read_bytes()).decode("ascii")
-    return f"data:{mime_type};base64,{encoded}"
+    return f"data:{mime};base64,{encoded}"
 
 
-def badge_group(items: list[str], badge_class: str = "tag-badge") -> str:
-    return "".join(
-        f'<span class="{badge_class}">{escape(item)}</span>' for item in items
-    )
+def badges(items: list[str], cls: str = "tag-badge") -> str:
+    return "".join(f'<span class="{cls}">{escape(i)}</span>' for i in items)
 
 
-def project_card_html(title: str, description: str, tags: list[str], url: str, image_path: str) -> str:
-    image_uri = image_to_data_uri(image_path)
+def project_card(p: dict) -> str:
+    uri = image_to_data_uri(p["imagem"])
     media = (
-        f'<div class="project-media"><img src="{image_uri}" alt="{escape(title)}"></div>'
-        if image_uri
-        else '<div class="project-media project-media-fallback">Preview indisponivel</div>'
+        f'<div class="project-media"><img src="{uri}" alt="{escape(p["titulo"])}" loading="lazy"></div>'
+        if uri else
+        '<div class="project-media project-media-fallback">Preview indisponível</div>'
     )
+    has_link = bool(p["url"]) and p["url"] != "#"
+    btn_label = "Acessar projeto ↗" if has_link else "Em breve"
+    btn_attrs = (
+        f'href="{escape(p["url"])}" target="_blank" rel="noopener"'
+        if has_link else 'href="#" aria-disabled="true"'
+    )
+    btn_class = "action-button" if has_link else "action-button action-button-disabled"
     return f"""
-    <article class="project-card card-strong">
+    <article class="project-card">
         {media}
-        <div class="project-title">{escape(title)}</div>
-        <div class="project-text">{escape(description)}</div>
-        <div class="badge-row">{badge_group(tags)}</div>
+        <div class="project-meta-top">
+            <span class="project-category">{escape(p["categoria"])}</span>
+        </div>
+        <h3 class="project-title">{escape(p["titulo"])}</h3>
+        <p class="project-text">{escape(p["desc"])}</p>
+        <div class="badge-row">{badges(p["tags"])}</div>
         <div class="button-row">
-            <a class="action-button" href="{escape(url)}" target="_blank">Acessar projeto</a>
+            <a class="{btn_class}" {btn_attrs}>{btn_label}</a>
         </div>
     </article>
     """
 
 
-def certificate_card_html(title: str, provider: str, period: str, hours: str) -> str:
+def cert_card(title: str, provider: str, period: str, hours: str) -> str:
     return f"""
-    <article class="certificate-card card-soft">
-        <div class="section-kicker">Certificado</div>
-        <div class="project-title">{escape(title)}</div>
-        <div class="timeline-meta">{escape(provider)}</div>
-        <div class="section-text">{escape(period)}</div>
-        <div class="badge-row badge-row-top">
-            <span class="tech-badge">{escape(hours)}</span>
+    <article class="certificate-card">
+        <div class="cert-icon">🎓</div>
+        <div class="cert-body">
+            <div class="section-kicker">Certificado · {escape(hours)}</div>
+            <div class="cert-title">{escape(title)}</div>
+            <div class="cert-meta">{escape(provider)} · {escape(period)}</div>
         </div>
     </article>
     """
 
 
-profile_image_uri = image_to_data_uri("perfil/imagem-oculos1.jpg")
+def service_card(s: dict) -> str:
+    return f"""
+    <article class="service-card">
+        <div class="service-icon">{s["icone"]}</div>
+        <h3 class="service-title">{escape(s["titulo"])}</h3>
+        <p class="service-text">{escape(s["desc"])}</p>
+        <div class="badge-row">{badges(s["tags"])}</div>
+    </article>
+    """
 
+
+def experience_item(e: dict) -> str:
+    return f"""
+    <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+            <div class="timeline-period">{escape(e["periodo"])}</div>
+            <div class="timeline-role">{escape(e["cargo"])}</div>
+            <div class="timeline-company">{escape(e["empresa"])}</div>
+            <p class="timeline-text">{escape(e["desc"])}</p>
+        </div>
+    </div>
+    """
+
+
+def stack_block(titulo: str, itens: list[str]) -> str:
+    return f"""
+    <div class="stack-block">
+        <div class="stack-title">{escape(titulo)}</div>
+        <div class="badge-row">{badges(itens)}</div>
+    </div>
+    """
+
+
+def metric_box(value: str, label: str) -> str:
+    return f"""
+    <div class="metric-box">
+        <div class="metric-value">{escape(value)}</div>
+        <div class="metric-label">{escape(label)}</div>
+    </div>
+    """
+
+
+profile_uri = image_to_data_uri("perfil/imagem-oculos1.jpg")
+
+# =============================================================================
+# CSS
+# =============================================================================
 CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 :root {
-    --surface-1: rgba(255,255,255,0.055);
-    --surface-2: rgba(15,23,42,0.76);
-    --surface-3: rgba(2,6,23,0.62);
-    --border-soft: rgba(148,163,184,0.16);
-    --border-strong: rgba(56,189,248,0.22);
-    --text-main: #e5e7eb;
+    --bg-0: #05060a;
+    --bg-1: #0a0d14;
+    --bg-2: #0f1320;
+    --surface: rgba(255,255,255,0.04);
+    --surface-hover: rgba(255,255,255,0.06);
+    --border: rgba(148,163,184,0.12);
+    --border-strong: rgba(56,189,248,0.32);
+    --text: #e5e7eb;
     --text-soft: #cbd5e1;
     --text-muted: #94a3b8;
-    --accent-a: #22d3ee;
-    --accent-b: #3b82f6;
-    --accent-c: #38bdf8;
+    --accent: #22d3ee;
+    --accent-2: #3b82f6;
+    --accent-3: #a855f7;
+    --gradient: linear-gradient(135deg, #22d3ee 0%, #3b82f6 50%, #a855f7 100%);
 }
 
-* { font-family: 'Inter', sans-serif; }
+*, *::before, *::after {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    box-sizing: border-box;
+}
 
 html, body, [class*="css"] {
-    color: var(--text-main);
+    color: var(--text);
     scroll-behavior: smooth;
 }
 
 .stApp {
     background:
-        radial-gradient(circle at 0% 0%, rgba(34,211,238,0.12), transparent 20%),
-        radial-gradient(circle at 100% 0%, rgba(59,130,246,0.13), transparent 25%),
-        radial-gradient(circle at 100% 100%, rgba(14,165,233,0.10), transparent 22%),
-        linear-gradient(135deg, #020617 0%, #0b1120 45%, #111827 100%);
+        radial-gradient(1200px 600px at 10% -10%, rgba(34,211,238,0.10), transparent 60%),
+        radial-gradient(1000px 500px at 90% 0%, rgba(168,85,247,0.10), transparent 60%),
+        radial-gradient(800px 400px at 50% 100%, rgba(59,130,246,0.08), transparent 60%),
+        linear-gradient(180deg, #05060a 0%, #0a0d14 50%, #05060a 100%);
 }
+
+#MainMenu, footer, header[data-testid="stHeader"] { visibility: hidden; height: 0; }
 
 .block-container {
-    max-width: 1360px;
-    padding-top: 1.2rem;
-    padding-bottom: 2.6rem;
-}
-
-[data-testid="stHeader"] {
-    background: transparent;
+    max-width: 1280px;
+    padding: 1.4rem 1.6rem 3rem;
 }
 
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, rgba(2,6,23,0.98), rgba(15,23,42,0.98));
-    border-right: 1px solid rgba(255,255,255,0.06);
+    background: linear-gradient(180deg, #06080d, #0a0d14);
+    border-right: 1px solid var(--border);
 }
 
-.hero-card, .glass-card, .project-card, .contact-card, .placeholder-shot, .profile-card, .certificate-card, .action-card {
+/* ---------- HERO ---------- */
+.hero {
     position: relative;
+    padding: 56px 48px;
+    border-radius: 32px;
+    background:
+        radial-gradient(600px 300px at 100% 0%, rgba(168,85,247,0.18), transparent 60%),
+        radial-gradient(500px 250px at 0% 100%, rgba(34,211,238,0.16), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,0.04), rgba(15,19,32,0.85));
+    border: 1px solid var(--border);
     overflow: hidden;
-    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(15,23,42,0.76));
-    border: 1px solid var(--border-soft);
-    border-radius: 28px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.24);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    animation: fadeUp 0.55s ease both;
-    transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+    margin-bottom: 28px;
 }
 
-.hero-card::before, .glass-card::before, .project-card::before, .contact-card::before, .profile-card::before, .certificate-card::before, .action-card::before {
+.hero::before {
     content: "";
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(34,211,238,0.55), rgba(59,130,246,0.18), transparent 78%);
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(148,163,184,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,184,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    pointer-events: none;
 }
 
-.hero-card { padding: 36px; }
-.glass-card, .project-card, .contact-card, .placeholder-shot, .profile-card, .certificate-card, .action-card { padding: 22px; }
-
-.glass-card:hover, .project-card:hover, .contact-card:hover, .profile-card:hover, .certificate-card:hover, .action-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(56,189,248,0.3);
-    box-shadow: 0 24px 60px rgba(0,0,0,0.28);
-}
-
-.card-compact { min-height: 188px; }
-.card-medium { min-height: 238px; }
-.card-tall { min-height: 320px; }
-.card-strong { min-height: 540px; }
-.card-soft { min-height: 200px; }
-
-.profile-card {
-    min-height: 238px;
-    display: flex;
-    flex-direction: column;
+.hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 48px;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 16px;
-    background: radial-gradient(circle at top, rgba(34,211,238,0.14), transparent 45%), linear-gradient(180deg, rgba(255,255,255,0.06), rgba(15,23,42,0.82));
 }
 
-.profile-photo {
-    width: min(100%, 230px);
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    display: block;
-    border-radius: 24px;
-    border: 1px solid rgba(255,255,255,0.14);
-    box-shadow: 0 18px 45px rgba(0,0,0,0.32);
-}
-
-.profile-name {
-    color: #f8fafc;
-    font-size: 1.32rem;
-    font-weight: 800;
-    line-height: 1.2;
-}
-
-.profile-role {
-    color: var(--text-soft);
-    font-size: 0.96rem;
-    line-height: 1.7;
-    max-width: 28ch;
-}
-
-.profile-meta {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-}
-
-.avatar-wrap {
-    width: 88px;
-    height: 88px;
-    border-radius: 24px;
-    display: flex;
+.hero-status {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #0ea5e9, #2563eb);
-    color: white;
-    font-size: 2rem;
-    font-weight: 900;
-    box-shadow: 0 16px 30px rgba(14,165,233,0.25);
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgba(34,197,94,0.10);
+    border: 1px solid rgba(34,197,94,0.28);
+    color: #86efac;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
     margin-bottom: 18px;
 }
 
-.eyebrow {
-    display: inline-block;
-    padding: 8px 14px;
-    border-radius: 999px;
-    background: rgba(56,189,248,0.10);
-    border: 1px solid rgba(56,189,248,0.20);
-    color: #7dd3fc;
-    font-size: 0.8rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 16px;
+.hero-status .dot {
+    width: 8px; height: 8px; border-radius: 999px;
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.25);
+    animation: pulse 2s infinite;
 }
 
-.status-badge {
-    display: inline-block;
-    margin-left: 10px;
-    padding: 8px 14px;
-    border-radius: 999px;
-    background: rgba(34,197,94,0.10);
-    border: 1px solid rgba(34,197,94,0.25);
-    color: #86efac;
-    font-size: 0.8rem;
-    font-weight: 800;
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
 }
 
-.hero-title {
-    font-size: 3.2rem;
-    line-height: 1.02;
-    font-weight: 900;
+.hero-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.2rem, 4.6vw, 3.6rem);
+    line-height: 1.05;
+    font-weight: 700;
     color: #f8fafc;
-    margin-bottom: 12px;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+}
+
+.hero-role {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 18px;
+    letter-spacing: 0.02em;
+}
+
+.hero-tagline {
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: var(--text-soft);
+    max-width: 60ch;
+    margin: 0 0 28px;
 }
 
 .hero-gradient {
-    background: linear-gradient(90deg, #22d3ee 0%, #60a5fa 45%, #38bdf8 100%);
+    background: var(--gradient);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.hero-subtitle {
-    font-size: 1.04rem;
-    line-height: 1.9;
-    color: #cbd5e1;
-    max-width: 900px;
-    margin-bottom: 22px;
-}
-
-.badges-row {
+.hero-cta-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 18px;
+    gap: 12px;
+    margin-bottom: 28px;
 }
 
-.tech-badge, .tag-badge {
-    display: inline-block;
-    border-radius: 999px;
-    padding: 9px 14px;
-    font-size: 0.83rem;
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 22px;
+    border-radius: 14px;
     font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    white-space: nowrap;
 }
 
-.tech-badge {
-    background: linear-gradient(90deg, #2563eb, #06b6d4);
+.btn-primary {
+    background: var(--gradient);
     color: white;
+    box-shadow: 0 12px 28px rgba(59,130,246,0.32);
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(59,130,246,0.42);
 }
 
-.tag-badge {
-    background: rgba(56,189,248,0.10);
-    border: 1px solid rgba(56,189,248,0.16);
-    color: #7dd3fc;
+.btn-ghost {
+    background: rgba(255,255,255,0.04);
+    border-color: var(--border);
+    color: var(--text);
+}
+.btn-ghost:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
 }
 
-.badge-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.badge-row-top {
-    margin-top: 18px;
-}
-
-.section-title {
-    font-size: 1.12rem;
-    color: #f8fafc;
-    font-weight: 800;
-    margin-bottom: 14px;
-}
-
-.section-text {
-    color: var(--text-soft);
-    line-height: 1.85;
-    font-size: 0.96rem;
-}
-
-.section-kicker {
-    color: #7dd3fc;
-    font-size: 0.78rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 14px;
-}
-
-.metric-grid {
+.hero-stats {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 14px;
-    margin-top: 18px;
 }
 
 .metric-box {
-    background: rgba(2,6,23,0.46);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 18px;
-    padding: 18px;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(2,6,23,0.42);
+    border: 1px solid var(--border);
+    text-align: left;
+    transition: border-color 0.2s ease, transform 0.2s ease;
 }
-
-.metric-label {
-    color: #94a3b8;
-    font-size: 0.8rem;
+.metric-box:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+}
+.metric-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
     margin-bottom: 6px;
 }
-
-.metric-value {
-    color: #f8fafc;
-    font-weight: 800;
-    font-size: 1.12rem;
+.metric-label {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 500;
 }
 
-.contact-line {
+/* ---------- HERO PHOTO ---------- */
+.hero-photo-wrap {
+    position: relative;
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    color: var(--text-main);
-    font-size: 0.95rem;
+    justify-content: center;
 }
-
-.contact-line:last-child {
-    border-bottom: none;
+.hero-photo-frame {
+    position: relative;
+    width: min(100%, 320px);
+    aspect-ratio: 4/5;
+    border-radius: 28px;
+    padding: 4px;
+    background: var(--gradient);
+    box-shadow: 0 30px 80px rgba(34,211,238,0.22);
 }
-
-.contact-anchor {
-    color: inherit;
-    text-decoration: none;
-    word-break: break-word;
-    overflow-wrap: anywhere;
-}
-
-.contact-anchor:hover {
-    color: #7dd3fc;
-}
-
-.project-card {
-    display: flex;
-    flex-direction: column;
-}
-
-.project-media {
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    border-radius: 22px;
-    overflow: hidden;
-    margin-bottom: 18px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: linear-gradient(135deg, rgba(34,211,238,0.12), rgba(37,99,235,0.18));
-}
-
-.project-media img {
-    width: 100%;
-    height: 100%;
+.hero-photo {
+    width: 100%; height: 100%;
     object-fit: cover;
+    border-radius: 24px;
     display: block;
 }
+.hero-photo-tag {
+    position: absolute;
+    bottom: -14px; left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: #0a0d14;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
 
-.project-media-fallback {
+/* ---------- SEÇÕES ---------- */
+.section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 56px 0 24px;
+}
+.section-eyebrow {
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+.section-headline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+    font-weight: 700;
+    color: #f8fafc;
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+.section-sub {
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 70ch;
+}
+
+/* ---------- CARDS BASE ---------- */
+.glass-card, .service-card, .project-card, .certificate-card, .contact-card {
+    position: relative;
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(10,13,20,0.72));
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 24px;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.glass-card:hover, .service-card:hover, .project-card:hover, .certificate-card:hover, .contact-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-strong);
+    box-shadow: 0 22px 50px rgba(0,0,0,0.32);
+}
+
+/* ---------- SERVIÇOS ---------- */
+.service-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    height: 100%;
+    min-height: 280px;
+}
+.service-icon {
+    width: 52px; height: 52px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.82rem;
+    font-size: 1.6rem;
+    background: linear-gradient(135deg, rgba(34,211,238,0.18), rgba(59,130,246,0.18));
+    border: 1px solid var(--border-strong);
 }
-
-.project-title {
-    font-size: 1.08rem;
-    font-weight: 800;
+.service-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
     color: #f8fafc;
-    margin-bottom: 8px;
+    margin: 0;
+}
+.service-text {
+    color: var(--text-soft);
+    font-size: 0.94rem;
+    line-height: 1.7;
+    margin: 0;
+    flex: 1;
 }
 
+/* ---------- PROJETOS ---------- */
+.project-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    padding: 0;
+}
+.project-media {
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(34,211,238,0.10), rgba(59,130,246,0.14));
+}
+.project-media img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+.project-card:hover .project-media img { transform: scale(1.04); }
+.project-media-fallback {
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    aspect-ratio: 16/10;
+}
+.project-meta-top {
+    padding: 18px 22px 0;
+}
+.project-category {
+    display: inline-block;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: rgba(168,85,247,0.10);
+    border: 1px solid rgba(168,85,247,0.28);
+    color: #d8b4fe;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.project-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.22rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 12px 22px 8px;
+}
 .project-text {
     color: var(--text-soft);
-    line-height: 1.78;
-    font-size: 0.95rem;
-    margin-bottom: 16px;
+    font-size: 0.94rem;
+    line-height: 1.7;
+    margin: 0 22px 16px;
+    flex: 1;
 }
-
+.project-card .badge-row { padding: 0 22px; }
 .button-row {
     margin-top: auto;
-    padding-top: 18px;
+    padding: 18px 22px 22px;
 }
 
+/* ---------- BADGES ---------- */
+.badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.tag-badge, .tech-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+.tag-badge {
+    background: rgba(56,189,248,0.08);
+    border: 1px solid rgba(56,189,248,0.20);
+    color: #7dd3fc;
+}
+.tech-badge {
+    background: var(--gradient);
+    color: white;
+    border: none;
+}
+
+/* ---------- BOTÃO PROJETO ---------- */
 .action-button {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    min-height: 50px;
+    min-height: 48px;
     padding: 12px 18px;
-    border-radius: 16px;
-    border: 1px solid rgba(56,189,248,0.24);
-    background: linear-gradient(135deg, rgba(14,165,233,0.22), rgba(37,99,235,0.22));
+    border-radius: 12px;
+    border: 1px solid var(--border-strong);
+    background: linear-gradient(135deg, rgba(34,211,238,0.14), rgba(59,130,246,0.14));
     color: #f8fafc;
     text-decoration: none;
     font-weight: 700;
-    letter-spacing: 0.01em;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
-    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+    font-size: 0.92rem;
+    transition: all 0.22s ease;
 }
-
 .action-button:hover {
     transform: translateY(-2px);
-    border-color: rgba(125,211,252,0.46);
-    background: linear-gradient(135deg, rgba(34,211,238,0.32), rgba(37,99,235,0.32));
-    box-shadow: 0 12px 30px rgba(14,165,233,0.18);
+    background: linear-gradient(135deg, rgba(34,211,238,0.28), rgba(59,130,246,0.28));
+    box-shadow: 0 12px 28px rgba(34,211,238,0.18);
+}
+.action-button-disabled {
+    opacity: 0.55;
+    pointer-events: none;
+    background: rgba(148,163,184,0.08);
+    border-color: var(--border);
 }
 
-.action-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14px;
-    margin-top: 18px;
+/* ---------- TIMELINE ---------- */
+.timeline {
+    position: relative;
+    padding-left: 28px;
 }
-
-.certificate-card {
-    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(15,23,42,0.86));
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px; top: 6px; bottom: 6px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent), transparent);
+    opacity: 0.4;
 }
-
-.placeholder-shot {
-    min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #94a3b8;
-    border-style: dashed;
-    margin-bottom: 12px;
+.timeline-item {
+    position: relative;
+    padding-bottom: 28px;
 }
-
-.timeline-role {
-    color: #f8fafc;
-    font-size: 1rem;
-    font-weight: 800;
-    margin-bottom: 6px;
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-dot {
+    position: absolute;
+    left: -28px; top: 6px;
+    width: 18px; height: 18px;
+    border-radius: 999px;
+    background: var(--gradient);
+    border: 3px solid var(--bg-1);
+    box-shadow: 0 0 0 2px var(--border-strong);
 }
-
-.timeline-meta {
-    color: #7dd3fc;
-    font-size: 0.90rem;
+.timeline-period {
+    color: var(--accent);
+    font-size: 0.82rem;
     font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+.timeline-role {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #f8fafc;
+    font-size: 1.08rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+.timeline-company {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 600;
     margin-bottom: 10px;
 }
-
 .timeline-text {
     color: var(--text-soft);
+    line-height: 1.75;
+    font-size: 0.94rem;
+    margin: 0;
+}
+
+/* ---------- STACK ---------- */
+.stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+}
+.stack-block {
+    padding: 18px;
+    background: rgba(2,6,23,0.42);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: border-color 0.2s ease;
+}
+.stack-block:hover { border-color: var(--border-strong); }
+.stack-title {
+    color: #f8fafc;
+    font-weight: 700;
+    font-size: 0.92rem;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+}
+
+/* ---------- CERTIFICADOS ---------- */
+.certificate-card {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px;
+}
+.cert-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, rgba(34,211,238,0.16), rgba(59,130,246,0.16));
+    border: 1px solid var(--border-strong);
+    font-size: 1.2rem;
+    flex: 0 0 auto;
+}
+.cert-body { min-width: 0; }
+.section-kicker {
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+.cert-title {
+    color: #f8fafc;
+    font-weight: 700;
+    font-size: 0.98rem;
+    line-height: 1.4;
+    margin-bottom: 6px;
+}
+.cert-meta {
+    color: var(--text-muted);
+    font-size: 0.84rem;
+}
+
+/* ---------- CTA / CONTATO ---------- */
+.cta-banner {
+    margin-top: 56px;
+    padding: 44px 40px;
+    border-radius: 28px;
+    background:
+        radial-gradient(600px 300px at 0% 0%, rgba(34,211,238,0.18), transparent 60%),
+        radial-gradient(600px 300px at 100% 100%, rgba(168,85,247,0.18), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,0.04), rgba(15,19,32,0.85));
+    border: 1px solid var(--border-strong);
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px;
+    align-items: center;
+}
+.cta-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.6rem, 2.4vw, 2rem);
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0 0 10px;
+    line-height: 1.2;
+}
+.cta-text {
+    color: var(--text-soft);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0;
+}
+.cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contact-card {
+    display: flex; flex-direction: column; gap: 6px;
+}
+.contact-line {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
     font-size: 0.95rem;
-    line-height: 1.8;
 }
-
-.footer-text {
-    color: #94a3b8;
-    font-size: 0.9rem;
-    line-height: 1.8;
+.contact-line:last-child { border-bottom: none; }
+.contact-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(56,189,248,0.10);
+    border: 1px solid rgba(56,189,248,0.22);
+    flex: 0 0 auto;
+    font-size: 1rem;
 }
+.contact-anchor {
+    color: var(--text);
+    text-decoration: none;
+    word-break: break-word;
+}
+.contact-anchor:hover { color: var(--accent); }
 
+/* ---------- FOOTER ---------- */
+.site-footer {
+    margin-top: 48px;
+    padding: 24px 0 8px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+    font-size: 0.86rem;
+}
+.site-footer a { color: var(--text-muted); text-decoration: none; margin-left: 16px; }
+.site-footer a:hover { color: var(--accent); }
+
+/* ---------- TABS ---------- */
 .stTabs [data-baseweb="tab-list"] {
-    gap: 10px;
-    margin-bottom: 14px;
+    gap: 6px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
 }
-
 .stTabs [data-baseweb="tab"] {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 14px;
-    color: var(--text-main);
-    padding: 12px 18px;
-    min-height: 48px;
-    transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    color: var(--text-muted);
+    padding: 14px 18px;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
-
-.stTabs [data-baseweb="tab"]:hover {
-    transform: translateY(-1px);
-    border-color: rgba(56,189,248,0.25);
-}
-
+.stTabs [data-baseweb="tab"]:hover { color: var(--text); }
 .stTabs [aria-selected="true"] {
-    background: linear-gradient(90deg, rgba(14,165,233,0.18), rgba(37,99,235,0.18));
-    border: 1px solid rgba(56,189,248,0.35);
+    background: transparent;
+    color: var(--accent) !important;
+    border-bottom: 2px solid var(--accent);
 }
 
+/* Streamlit native buttons */
 .stButton > button,
 a[data-testid="stLinkButton"],
-div[data-testid="stDownloadButton"] button,
-div[data-testid="stPopover"] button {
+div[data-testid="stDownloadButton"] button {
     width: 100%;
-    border-radius: 14px !important;
-    min-height: 50px;
-    border: 1px solid rgba(56,189,248,0.22) !important;
-    background: linear-gradient(135deg, rgba(14,165,233,0.18), rgba(37,99,235,0.18)) !important;
+    border-radius: 12px !important;
+    min-height: 48px;
+    border: 1px solid var(--border-strong) !important;
+    background: linear-gradient(135deg, rgba(34,211,238,0.14), rgba(59,130,246,0.14)) !important;
     color: #f8fafc !important;
-    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease !important;
+    font-weight: 700 !important;
+    transition: all 0.22s ease !important;
 }
-
 .stButton > button:hover,
 a[data-testid="stLinkButton"]:hover,
-div[data-testid="stDownloadButton"] button:hover,
-div[data-testid="stPopover"] button:hover {
+div[data-testid="stDownloadButton"] button:hover {
     transform: translateY(-2px);
-    border-color: rgba(125,211,252,0.46) !important;
-    box-shadow: 0 12px 30px rgba(14,165,233,0.16) !important;
+    box-shadow: 0 12px 28px rgba(34,211,238,0.18) !important;
 }
 
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(14px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* ---------- RESPONSIVO ---------- */
+@media (max-width: 980px) {
+    .hero { padding: 36px 24px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .cta-banner { grid-template-columns: 1fr; padding: 32px 24px; }
+    .hero-photo-frame { max-width: 260px; margin: 0 auto; }
 }
 
-@media (max-width: 900px) {
-    .hero-title { font-size: 2.25rem; }
-    .metric-grid { grid-template-columns: 1fr; }
-    .status-badge {
-        display: block;
-        margin-left: 0;
-        margin-top: 10px;
-        width: fit-content;
-    }
-    .action-grid { grid-template-columns: 1fr; }
-    .card-strong, .card-tall, .card-medium, .card-compact, .card-soft { min-height: auto; }
+@media (max-width: 640px) {
+    .block-container { padding: 1rem 0.9rem 2rem; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .section-header { margin: 40px 0 20px; }
 }
 </style>
 """
 
+# =============================================================================
+# WHATSAPP FLUTUANTE
+# =============================================================================
 WHATSAPP_FLOAT = """
-<a
-    href="https://wa.me/5531998417976"
-    target="_blank"
-    style="
-        position: fixed;
-        right: 22px;
-        bottom: 22px;
-        z-index: 99999;
-        min-width: 196px;
-        height: 58px;
-        padding: 0 20px 0 16px;
-        border-radius: 999px;
-        border: 1px solid rgba(255,255,255,0.14);
-        background: linear-gradient(135deg, #25d366, #128c7e);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        color: white;
-        text-decoration: none;
-        font-size: 0.96rem;
-        font-weight: 700;
-        letter-spacing: 0.01em;
-        box-shadow: 0 18px 34px rgba(18,140,126,0.32);
-        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-    "
-    onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 22px 40px rgba(18,140,126,0.42)';this.style.filter='brightness(1.03)'"
-    onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 18px 34px rgba(18,140,126,0.32)';this.style.filter='brightness(1)'"
-    aria-label="Conversar no WhatsApp"
->
-    <span style="width:32px;height:32px;border-radius:999px;background:rgba(255,255,255,0.16);display:flex;align-items:center;justify-content:center;flex:0 0 auto;">
-        <svg width="18" height="18" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M27.281 4.695A15.84 15.84 0 0016.04 0C7.308 0 .192 7.114.188 15.858c0 2.772.724 5.48 2.1 7.87L0 32l8.482-2.224a15.796 15.796 0 007.554 1.924h.006c8.73 0 15.846-7.114 15.85-15.858A15.75 15.75 0 0027.28 4.695zm-11.24 24.33h-.005a13.14 13.14 0 01-6.69-1.828l-.48-.285-5.033 1.32 1.344-4.905-.313-.502a13.097 13.097 0 01-2.02-6.97C2.848 8.58 8.77 2.67 16.04 2.67c3.513.001 6.815 1.37 9.296 3.854a13.07 13.07 0 013.848 9.31c-.003 7.274-5.926 13.19-13.143 13.19zm7.208-9.83c-.394-.197-2.33-1.15-2.693-1.28-.362-.132-.626-.198-.89.197-.263.394-1.02 1.28-1.25 1.543-.23.263-.46.296-.854.099-.394-.197-1.664-.613-3.17-1.955-1.17-1.042-1.96-2.33-2.19-2.724-.23-.394-.024-.607.173-.803.177-.176.394-.46.592-.69.197-.23.263-.394.394-.657.132-.263.066-.493-.033-.69-.099-.197-.89-2.144-1.22-2.935-.322-.773-.65-.668-.89-.68-.23-.011-.493-.014-.756-.014-.263 0-.69.099-1.052.493-.362.394-1.38 1.35-1.38 3.29 0 1.94 1.413 3.814 1.61 4.077.197.263 2.78 4.245 6.735 5.95.94.406 1.674.648 2.246.83.944.3 1.803.258 2.482.157.758-.113 2.33-.952 2.66-1.872.329-.92.329-1.708.23-1.872-.099-.164-.362-.263-.756-.46z" fill="white"/>
-        </svg>
-    </span>
-    <span style="display:flex;flex-direction:column;line-height:1.05;align-items:flex-start;">
-        <span style="font-size:0.74rem;opacity:0.86;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;">Atendimento</span>
-        <span>Chamar no WhatsApp</span>
-    </span>
+<a href="https://wa.me/5531998417976" target="_blank" rel="noopener"
+   aria-label="Conversar no WhatsApp"
+   style="position:fixed;right:22px;bottom:22px;z-index:9999;
+          display:flex;align-items:center;gap:10px;padding:12px 18px 12px 14px;
+          border-radius:999px;background:linear-gradient(135deg,#25d366,#128c7e);
+          color:white;text-decoration:none;font-weight:700;font-size:0.92rem;
+          box-shadow:0 14px 32px rgba(18,140,126,0.42);
+          border:1px solid rgba(255,255,255,0.18);
+          transition:transform 0.22s ease, box-shadow 0.22s ease;"
+   onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 18px 40px rgba(18,140,126,0.55)'"
+   onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 14px 32px rgba(18,140,126,0.42)'">
+   <span style="width:30px;height:30px;border-radius:999px;background:rgba(255,255,255,0.18);
+                display:flex;align-items:center;justify-content:center;flex:0 0 auto;">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+         <path d="M27.281 4.695A15.84 15.84 0 0016.04 0C7.308 0 .192 7.114.188 15.858c0 2.772.724 5.48 2.1 7.87L0 32l8.482-2.224a15.796 15.796 0 007.554 1.924h.006c8.73 0 15.846-7.114 15.85-15.858A15.75 15.75 0 0027.28 4.695zm-11.24 24.33h-.005a13.14 13.14 0 01-6.69-1.828l-.48-.285-5.033 1.32 1.344-4.905-.313-.502a13.097 13.097 0 01-2.02-6.97C2.848 8.58 8.77 2.67 16.04 2.67c3.513.001 6.815 1.37 9.296 3.854a13.07 13.07 0 013.848 9.31c-.003 7.274-5.926 13.19-13.143 13.19zm7.208-9.83c-.394-.197-2.33-1.15-2.693-1.28-.362-.132-.626-.198-.89.197-.263.394-1.02 1.28-1.25 1.543-.23.263-.46.296-.854.099-.394-.197-1.664-.613-3.17-1.955-1.17-1.042-1.96-2.33-2.19-2.724-.23-.394-.024-.607.173-.803.177-.176.394-.46.592-.69.197-.23.263-.394.394-.657.132-.263.066-.493-.033-.69-.099-.197-.89-2.144-1.22-2.935-.322-.773-.65-.668-.89-.68-.23-.011-.493-.014-.756-.014-.263 0-.69.099-1.052.493-.362.394-1.38 1.35-1.38 3.29 0 1.94 1.413 3.814 1.61 4.077.197.263 2.78 4.245 6.735 5.95.94.406 1.674.648 2.246.83.944.3 1.803.258 2.482.157.758-.113 2.33-.952 2.66-1.872.329-.92.329-1.708.23-1.872-.099-.164-.362-.263-.756-.46z" fill="white"/>
+      </svg>
+   </span>
+   <span>WhatsApp</span>
 </a>
 """
 
 st.html(CSS)
 st.html(WHATSAPP_FLOAT)
 
+# =============================================================================
+# SIDEBAR — apenas identidade + download do currículo
+# (Contato, links e métricas já aparecem no Hero/CTA/aba Contato)
+# =============================================================================
 with st.sidebar:
-    st.markdown("## William Eustáquio")
-    st.markdown("Desenvolvedor Python | Automação & IA")
-    if Path("perfil/imagem-oculos1.jpg").exists():
-        st.image("perfil/imagem-oculos1.jpg", use_container_width=True)
+    st.markdown(f"### {NOME}")
+    st.caption(CARGO)
     st.markdown("---")
-    st.markdown("### Especialidades")
-    st.markdown("- 🐍 Python")
-    st.markdown("- ⚡ FastAPI")
-    st.markdown("- 🌿 Django")
-    st.markdown("- 📊 Streamlit")
-    st.markdown("- 🧱 SQLAlchemy")
-    st.markdown("- 🐘 PostgreSQL")
-    st.markdown("- 🧠 Servidor MCP")
-    st.markdown("- 🤖 Agentes de IA")
-    st.markdown("- ⚙️ Automação de processos")
-    st.markdown("---")
-    st.markdown("### Qualidades")
-    st.markdown(
-        "Resolução de problemas, criatividade, foco em resultados, proatividade e organização.")
+    st.markdown("**Navegação**")
+    st.caption(
+        "Use as abas no topo para explorar Serviços, Projetos, Experiência e Certificações.")
     st.markdown("---")
     if pdf_bytes:
         st.download_button(
-            "Baixar currículo em PDF",
+            "⬇️ Baixar Currículo (PDF)",
             data=pdf_bytes,
             file_name="William_Eustaquio_Curriculo.pdf",
-            mime="application/pdf"
+            mime="application/pdf",
+            use_container_width=True,
         )
 
+# =============================================================================
+# HERO
+# =============================================================================
+photo_block = (
+    f"""
+    <div class="hero-photo-wrap">
+        <div class="hero-photo-frame">
+            <img class="hero-photo" src="{profile_uri}" alt="{escape(NOME)}">
+        </div>
+        <div class="hero-photo-tag">✨ Disponível para projetos</div>
+    </div>
+    """ if profile_uri else ""
+)
 
-tab1, tab2, tab3, tab4 = st.tabs(
-    ["Visão geral", "Projetos", "Certificados", "Contato"])
+metric_html = "".join(metric_box(v, l) for v, l in METRICAS)
 
-with tab1:
-    top_left, top_center, top_right = st.columns([0.85, 1.45, 1.1], gap="large")
+primeiro_nome = escape(NOME.split()[0])
+ultimo_nome = escape(" ".join(NOME.split()[1:]))
 
-    with top_left:
-        profile_markup = (
-            f'''
-            <div class="profile-card card-medium">
-                <img class="profile-photo" src="{profile_image_uri}" alt="William Eustáquio">
-                <div class="profile-name">William Eustáquio</div>
-                <div class="profile-role">Desenvolvedor Python focado em automação, aplicações web e integração com IA.</div>
-                <div class="profile-meta">
-                    <span class="tech-badge">Python</span>
-                    <span class="tech-badge">FastAPI</span>
-                    <span class="tech-badge">IA aplicada</span>
+hero_html = f"""
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-status"><span class="dot"></span> Aberto a novas oportunidades</div>
+      <h1 class="hero-name">Olá, sou {primeiro_nome} <span class="hero-gradient">{ultimo_nome}</span></h1>
+      <div class="hero-role">{escape(CARGO)}</div>
+      <p class="hero-tagline">{escape(TAGLINE)}</p>
+      <div class="hero-cta-row">
+        <a class="btn btn-primary" href="{escape(WHATSAPP_URL)}" target="_blank" rel="noopener">💬 Iniciar conversa</a>
+        <a class="btn btn-ghost" href="mailto:{escape(EMAIL)}">📧 Enviar e-mail</a>
+        <a class="btn btn-ghost" href="{escape(LINKEDIN_URL)}" target="_blank" rel="noopener">💼 LinkedIn</a>
+      </div>
+      <div class="hero-stats">{metric_html}</div>
+    </div>
+    {photo_block}
+  </div>
+</section>
+"""
+st.html(hero_html)
+
+# =============================================================================
+# TABS
+# =============================================================================
+tab_visao, tab_servicos, tab_projetos, tab_experiencia, tab_certs, tab_contato = st.tabs(
+    ["🏠 Visão geral", "💼 Serviços", "🚀 Projetos",
+     "📈 Experiência", "🎓 Certificações", "✉️ Contato"]
+)
+
+# ----- VISÃO GERAL -----
+with tab_visao:
+    st.markdown(
+        """
+        <div class="section-header">
+            <span class="section-eyebrow">Sobre mim</span>
+            <h2 class="section-headline">Tecnologia que <span class="hero-gradient">gera resultado</span></h2>
+            <p class="section-sub">
+                Desenvolvedor Python com experiência sólida em automação, suporte técnico e qualidade.
+                Construo APIs modernas, agentes de IA e dashboards para empresas que querem operar
+                com mais eficiência e menos retrabalho.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    col_a, col_b = st.columns([1.4, 1], gap="large")
+
+    with col_a:
+        st.markdown(
+            """
+            <div class="glass-card">
+                <div class="section-kicker">Resumo profissional</div>
+                <p class="timeline-text" style="margin-bottom:14px">
+                    Profissional com sólida experiência nas áreas de qualidade, suporte técnico
+                    e automação de processos. Especializado em desenvolvimento de sistemas com
+                    Python, APIs modernas e soluções com inteligência artificial.
+                </p>
+                <p class="timeline-text" style="margin:0">
+                    Atuação destacada em implantação de sistemas, automação de rotinas,
+                    desenvolvimento de chatbots e agentes de IA. Perfil proativo, criativo,
+                    com foco em resultados e aprendizado contínuo.
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with col_b:
+        st.markdown(
+            """
+            <div class="glass-card">
+                <div class="section-kicker">Diferenciais</div>
+                <div style="display:flex;flex-direction:column;gap:10px;margin-top:6px">
+                    <div style="display:flex;gap:10px;align-items:flex-start">
+                        <span style="color:#22d3ee;font-size:1.1rem">▸</span>
+                        <div><strong>Foco em ROI:</strong> entregas que impactam o financeiro do cliente.</div>
+                    </div>
+                    <div style="display:flex;gap:10px;align-items:flex-start">
+                        <span style="color:#22d3ee;font-size:1.1rem">▸</span>
+                        <div><strong>Comunicação clara:</strong> sem jargão técnico desnecessário.</div>
+                    </div>
+                    <div style="display:flex;gap:10px;align-items:flex-start">
+                        <span style="color:#22d3ee;font-size:1.1rem">▸</span>
+                        <div><strong>Visão de produto:</strong> resolvo o problema, não só o código.</div>
+                    </div>
+                    <div style="display:flex;gap:10px;align-items:flex-start">
+                        <span style="color:#22d3ee;font-size:1.1rem">▸</span>
+                        <div><strong>Aprendizado contínuo:</strong> stack sempre atualizada com IA.</div>
+                    </div>
                 </div>
             </div>
-            '''
-            if profile_image_uri
-            else '''
-            <div class="profile-card card-medium">
-                <div class="profile-name">William Eustáquio</div>
-                <div class="profile-role">Desenvolvedor Python focado em automação, aplicações web e integração com IA.</div>
-            </div>
-            '''
+            """,
+            unsafe_allow_html=True
         )
-        st.markdown(profile_markup, unsafe_allow_html=True)
 
-    with top_center:
-        st.markdown("""
-        <div class="glass-card card-medium">
-            <div class="section-kicker">Perfil profissional</div>
-            <div class="section-title">Resumo profissional</div>
-            <div class="section-text">
-                Profissional com sólida experiência nas áreas de qualidade, suporte técnico e automação de processos.
-                Especializado em desenvolvimento de sistemas com Python, APIs modernas e soluções com inteligência artificial.
-                Atuação destacada na implantação de sistemas, automação de rotinas, desenvolvimento de chatbots e agentes de IA.
-                Perfil proativo, criativo, com foco em resultados e aprendizado contínuo.
-            </div>
+    st.markdown(
+        """
+        <div class="section-header">
+            <span class="section-eyebrow">Stack técnica</span>
+            <h2 class="section-headline">Tecnologias que domino</h2>
         </div>
-        """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
 
-    with top_right:
-        st.markdown("""
-        <div class="contact-card card-medium">
-            <div class="section-kicker">Conexao direta</div>
-            <div class="section-title">Contato</div>
-            <div class="contact-line">📧 <a class="contact-anchor" href="mailto:williamllider@gmail.com">williamllider@gmail.com</a></div>
-            <div class="contact-line">📱 <a class="contact-anchor" href="https://wa.me/5531998417976" target="_blank">(31) 99841-7976</a></div>
-            <div class="contact-line">📍 Eldorado, Contagem - MG</div>
-            <div class="contact-line">🔗 <a class="contact-anchor" href="https://linkedin.com/in/william-silva-40888223a" target="_blank">linkedin.com/in/william-silva-40888223a</a></div>
+    stack_html = '<div class="stack-grid">' + "".join(
+        stack_block(k, v) for k, v in STACK.items()
+    ) + "</div>"
+    st.html(stack_html)
+
+# ----- SERVIÇOS -----
+with tab_servicos:
+    st.markdown(
+        """
+        <div class="section-header">
+            <span class="section-eyebrow">O que entrego</span>
+            <h2 class="section-headline">Serviços para <span class="hero-gradient">empresas</span></h2>
+            <p class="section-sub">
+                Soluções sob medida que economizam tempo, reduzem custos e geram dados
+                acionáveis para o seu time tomar decisões melhores.
+            </p>
         </div>
-        """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
+
+    cols = st.columns(2, gap="large")
+    for i, s in enumerate(SERVICOS):
+        with cols[i % 2]:
+            st.html(service_card(s))
+
+# ----- PROJETOS -----
+with tab_projetos:
+    st.markdown(
+        """
+        <div class="section-header">
+            <span class="section-eyebrow">Portfólio</span>
+            <h2 class="section-headline">Projetos em <span class="hero-gradient">destaque</span></h2>
+            <p class="section-sub">
+                Aplicações reais publicadas em produção — de bots financeiros a agentes
+                de vendas e plataformas de análise de dados com IA.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    cols = st.columns(2, gap="large")
+    for i, p in enumerate(PROJETOS):
+        with cols[i % 2]:
+            st.html(project_card(p))
+
+# ----- EXPERIÊNCIA -----
+with tab_experiencia:
+    st.markdown(
+        """
+        <div class="section-header">
+            <span class="section-eyebrow">Trajetória</span>
+            <h2 class="section-headline">Experiência profissional</h2>
+            <p class="section-sub">
+                Mais de 6 anos atuando entre qualidade, suporte técnico e desenvolvimento,
+                sempre conectando processo, pessoas e tecnologia.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    timeline_html = '<div class="glass-card"><div class="timeline">' + "".join(
+        experience_item(e) for e in EXPERIENCIAS
+    ) + "</div></div>"
+    st.html(timeline_html)
 
     st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
 
-    left, right = st.columns([1, 1.5], gap="large")
-
-    with left:
-        st.markdown("""
-        <div class="glass-card card-compact">
-            <div class="section-title">Competências principais</div>
-            <div class="badge-row">
-                <span class="tag-badge">Automação de processos empresariais</span>
-                <span class="tag-badge">APIs modernas e escaláveis</span>
-                <span class="tag-badge">Programação com IA</span>
-                <span class="tag-badge">Agentes de IA</span>
-                <span class="tag-badge">Chatbots</span>
-                <span class="tag-badge">Integrações inteligentes</span>
+    col1, col2 = st.columns(2, gap="large")
+    with col1:
+        st.markdown(
+            """
+            <div class="glass-card">
+                <div class="section-kicker">Formação acadêmica</div>
+                <div class="cert-title" style="margin-top:6px">Inteligência Artificial e Machine Learning</div>
+                <div class="cert-meta">Uniasselvi · Em andamento</div>
             </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class="glass-card card-tall">
-            <div class="section-title">Habilidades técnicas</div>
-            <div class="badge-row">
-                <span class="tag-badge">Python</span>
-                <span class="tag-badge">HTML</span>
-                <span class="tag-badge">JavaScript</span>
-                <span class="tag-badge">SQLAlchemy</span>
-                <span class="tag-badge">PostgreSQL</span>
-                <span class="tag-badge">MySQL</span>
-                <span class="tag-badge">FastAPI</span>
-                <span class="tag-badge">Django</span>
-                <span class="tag-badge">Streamlit</span>
-                <span class="tag-badge">SAP</span>
-                <span class="tag-badge">MarketUp</span>
-                <span class="tag-badge">Trello</span>
-                <span class="tag-badge">Make Automation</span>
+            """,
+            unsafe_allow_html=True
+        )
+    with col2:
+        st.markdown(
+            """
+            <div class="glass-card">
+                <div class="section-kicker">Trabalho voluntário</div>
+                <div class="cert-title" style="margin-top:6px">Recepcionista — Comunidade Cristã Recomeçar</div>
+                <div class="cert-meta">Desde 2014 · Atendimento e recepção em cultos e eventos</div>
             </div>
-        </div>
-        """, unsafe_allow_html=True)
+            """,
+            unsafe_allow_html=True
+        )
 
-    with right:
-        st.markdown("""
-        <div class="glass-card card-tall">
-            <div class="section-title">Experiência profissional</div>
-            <div class="timeline-role">Programador de Sistema de Gestão (MarketUp)</div>
-            <div class="timeline-meta">Brasil Ferro e Aço • 09/2021 — 09/2023</div>
-            <div class="timeline-text">
-                Implantação e configuração do sistema MarketUp, gestão dos módulos de clientes, produtos,
-                estoque, financeiro, NF-e e RH, além de treinamento e suporte remoto aos usuários,
-                com redução de erros operacionais e aumento de produtividade.
+# ----- CERTIFICAÇÕES -----
+with tab_certs:
+    st.markdown(
+        """
+        <div class="section-header">
+            <span class="section-eyebrow">Educação contínua</span>
+            <h2 class="section-headline">Certificações</h2>
+            <p class="section-sub">
+                Formação complementar focada em backend Python, APIs modernas, banco de dados,
+                cloud, visualização de dados e Inteligência Artificial.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    cols = st.columns(2, gap="medium")
+    for i, c in enumerate(CERTIFICADOS):
+        with cols[i % 2]:
+            st.html(cert_card(*c))
+
+# ----- CONTATO -----
+with tab_contato:
+    st.markdown(
+        """
+        <div class="section-header">
+            <span class="section-eyebrow">Vamos conversar</span>
+            <h2 class="section-headline">Pronto para o próximo <span class="hero-gradient">projeto</span>?</h2>
+            <p class="section-sub">
+                Conte sobre o seu desafio. Respondo em até 24h em dias úteis.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    col_l, col_r = st.columns([1, 1.1], gap="large")
+    with col_l:
+        st.markdown(
+            f"""
+            <div class="contact-card">
+                <div class="section-kicker">Canais diretos</div>
+                <div class="contact-line">
+                    <div class="contact-icon">📧</div>
+                    <a class="contact-anchor" href="mailto:{escape(EMAIL)}">{escape(EMAIL)}</a>
+                </div>
+                <div class="contact-line">
+                    <div class="contact-icon">📱</div>
+                    <a class="contact-anchor" href="{escape(WHATSAPP_URL)}" target="_blank" rel="noopener">{escape(TELEFONE_DISPLAY)}</a>
+                </div>
+                <div class="contact-line">
+                    <div class="contact-icon">💼</div>
+                    <a class="contact-anchor" href="{escape(LINKEDIN_URL)}" target="_blank" rel="noopener">LinkedIn — William Silva</a>
+                </div>
+                <div class="contact-line">
+                    <div class="contact-icon">📍</div>
+                    <span>{escape(LOCALIZACAO)}</span>
+                </div>
             </div>
-            <br>
-            <div class="timeline-role">Inspetor de Qualidade</div>
-            <div class="timeline-meta">Vallourec – Soluções Tubulares do Brasil • 09/2017 — 09/2019</div>
-            <div class="timeline-text">
-                Inspeção técnica de tubos, testes de conformidade, medições com instrumentos de metrologia
-                e apoio à melhoria contínua na produção.
+            """,
+            unsafe_allow_html=True
+        )
+    with col_r:
+        st.markdown(
+            """
+            <div class="glass-card">
+                <div class="section-kicker">Áreas de atuação</div>
+                <p class="timeline-text" style="margin:6px 0 14px">
+                    Desenvolvimento backend com Python, APIs modernas com FastAPI,
+                    aplicações web com Django e Streamlit, automação de processos,
+                    integração com IA, chatbots e agentes inteligentes.
+                </p>
+                <div class="badge-row">
+                    <span class="tag-badge">Backend Python</span>
+                    <span class="tag-badge">FastAPI</span>
+                    <span class="tag-badge">Django</span>
+                    <span class="tag-badge">Streamlit</span>
+                    <span class="tag-badge">Automação</span>
+                    <span class="tag-badge">IA aplicada</span>
+                    <span class="tag-badge">Chatbots</span>
+                    <span class="tag-badge">Dashboards</span>
+                </div>
             </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+# =============================================================================
+# CTA + FOOTER
+# =============================================================================
+st.html(
+    f"""
+    <section class="cta-banner">
+        <div>
+            <h3 class="cta-title">Vamos transformar seu processo em <span class="hero-gradient">software inteligente</span>?</h3>
+            <p class="cta-text">
+                Diga qual o desafio do seu time e em poucos dias entrego uma proposta
+                clara com escopo, prazo e ROI esperado. Sem enrolação, foco no resultado.
+            </p>
         </div>
-        """, unsafe_allow_html=True)
-
-    st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
-
-    b1, b2, b3 = st.columns(3, gap="large")
-
-    with b1:
-        st.markdown("""
-        <div class="glass-card card-compact">
-            <div class="section-title">Objetivos profissionais</div>
-            <div class="section-text">
-                Desenvolvedor Python Pleno/Sênior, Especialista em Automação de Processos,
-                Desenvolvedor de Chatbots e IA, Arquiteto de Soluções Python e Analista de Sistemas com foco em APIs e IA.
-            </div>
+        <div class="cta-actions">
+            <a class="btn btn-primary" href="{escape(WHATSAPP_URL)}" target="_blank" rel="noopener">💬 Falar no WhatsApp</a>
+            <a class="btn btn-ghost" href="mailto:{escape(EMAIL)}">📧 Enviar briefing por e-mail</a>
         </div>
-        """, unsafe_allow_html=True)
+    </section>
 
-    with b2:
-        st.markdown("""
-        <div class="glass-card card-compact">
-            <div class="section-title">Qualidades</div>
-            <div class="section-text">
-                Resolução de problemas, criatividade, foco em resultados, proatividade e organização.
-            </div>
+    <footer class="site-footer">
+        <div>© 2026 {escape(NOME)} — Todos os direitos reservados.</div>
+        <div>
+            <a href="{escape(LINKEDIN_URL)}" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="mailto:{escape(EMAIL)}">E-mail</a>
+            <a href="{escape(WHATSAPP_URL)}" target="_blank" rel="noopener">WhatsApp</a>
         </div>
-        """, unsafe_allow_html=True)
-
-    with b3:
-        st.markdown("""
-        <div class="glass-card card-compact">
-            <div class="section-title">Trabalho voluntário</div>
-            <div class="section-text">
-                Recepcionista na Comunidade Cristã Recomeçar desde 2014,
-                com atuação em atendimento e recepção em cultos e eventos.
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-with tab2:
-    st.markdown("""
-    <div class="glass-card card-compact">
-        <div class="section-title">Projetos em destaque</div>
-        <div class="section-text">
-            Área preparada para exibir os principais sistemas desenvolvidos,
-            com espaço visual para screenshots e links diretos para as aplicações.
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
-
-    p1, p2, p3 = st.columns(3, gap="large")
-
-    with p1:
-        st.markdown(project_card_html(
-            "Cripto Bot",
-            "Cripto Bot, um analista sênior de criptoativos especializado em protocolos DeFi, tokens, pools de liquidez e estratégias de Day Trade. Tire dúvidas, obtenha análises detalhadas e receba recomendações personalizadas para suas operações.",
-            ["Streamlit", "Dashboard", "Finanças"],
-            "https://cripto-bot.streamlit.app",
-            "perfil/crypto-bot.png"
-        ), unsafe_allow_html=True)
-
-    with p2:
-        st.markdown(project_card_html(
-            "Chef Delivery",
-            "Um agente de IA treinado para fazer vendas de carne online, com capacidade para sustentar centenas de atendimentos simultâneos, 24 horas por dia, 7 dias por semana, sem pausas humanas.",
-            ["UX/UI", "Produto", "Layout"],
-            "https://chef-delivery.streamlit.app",
-            "perfil/chef-delivery.png"
-        ), unsafe_allow_html=True)
-
-    with p3:
-        st.markdown(project_card_html(
-            "Oráculo Analista",
-            "Oráculo Analista é um especialista em análise de dados com foco em respostas objetivas, precisas e claras. Faça upload dos arquivos, envie perguntas e receba diagnósticos orientados por IA.",
-            ["IA", "Automação", "Integração"],
-            "https://oraculo-studant.streamlit.app/",
-            "perfil/oraculo-analista-home1.png"
-        ), unsafe_allow_html=True)
-
-with tab3:
-    st.markdown("""
-    <div class="glass-card card-compact">
-        <div class="section-kicker">Formação em andamento</div>
-        <div class="section-title">Inteligência Artificial e Machine Learning</div>
-        <div class="section-text">
-            Cursando Inteligência Artificial e Machine Learning na faculdade Uniasselvi.
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
-
-    st.markdown("""
-    <div class="glass-card card-compact">
-        <div class="section-title">Certificações em destaque</div>
-        <div class="section-text">
-            Formação complementar alinhada a backend Python, desenvolvimento web, APIs modernas,
-            bancos de dados, cloud e visualização de dados.
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
-
-    c1, c2, c3, c4 = st.columns(4, gap="medium")
-
-    with c1:
-        st.markdown(certificate_card_html(
-            "Programação em Python do básico ao avançado",
-            "Geek University",
-            "20/09/2021 a 14/03/2022",
-            "64 horas"
-        ), unsafe_allow_html=True)
-        st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
-        st.markdown(certificate_card_html(
-            "Programação Web com Python e Django Framework: Essencial",
-            "Geek University",
-            "08/02/2022 a 30/04/2022",
-            "35.5 horas"
-        ), unsafe_allow_html=True)
-
-    with c2:
-        st.markdown(certificate_card_html(
-            "FastAPI - APIs Modernas e Assíncronas com Python",
-            "Geek University",
-            "28/05/2022 a 17/02/2025",
-            "12 horas"
-        ), unsafe_allow_html=True)
-        st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
-        st.markdown(certificate_card_html(
-            "FastAPI - Websites Modernos e Assíncronos com Python",
-            "Geek University",
-            "29/01/2024 a 17/02/2024",
-            "14 horas"
-        ), unsafe_allow_html=True)
-
-    with c3:
-        st.markdown(certificate_card_html(
-            "SQL Alchemy: Essencial",
-            "Geek University",
-            "08/06/2023 a 21/02/2024",
-            "15 horas"
-        ), unsafe_allow_html=True)
-        st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
-        st.markdown(certificate_card_html(
-            "Amazon Web Services: Essencial",
-            "Geek University",
-            "30/04/2025 a 22/06/2025",
-            "12.5 horas"
-        ), unsafe_allow_html=True)
-
-    with c4:
-        st.markdown(certificate_card_html(
-            "Visualização de Dados com Python",
-            "Geek University",
-            "20/08/2025 a 25/08/2025",
-            "6 horas"
-        ), unsafe_allow_html=True)
-        st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
-        st.markdown(certificate_card_html(
-            "SQL e Power Query",
-            "Empowerdata",
-            "31/12/2021 e 20/10/2021",
-            "3.5h + 5h"
-        ), unsafe_allow_html=True)
-
-with tab4:
-    c_left, c_right = st.columns([1, 1.2], gap="large")
-
-    with c_left:
-        st.markdown("""
-        <div class="contact-card card-medium">
-            <div class="section-kicker">Disponivel para projetos</div>
-            <div class="section-title">Contato profissional</div>
-            <div class="contact-line">📧 <a class="contact-anchor" href="mailto:williamllider@gmail.com">williamllider@gmail.com</a></div>
-            <div class="contact-line">📱 <a class="contact-anchor" href="https://wa.me/5531998417976" target="_blank">(31) 99841-7976</a></div>
-            <div class="contact-line">📍 Eldorado, Contagem - MG</div>
-            <div class="contact-line">🔗 <a class="contact-anchor" href="https://linkedin.com/in/william-silva-40888223a" target="_blank">linkedin.com/in/william-silva-40888223a</a></div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with c_right:
-        st.markdown("""
-        <div class="glass-card card-medium">
-            <div class="section-title">Áreas de atuação</div>
-            <div class="section-text">
-                Desenvolvimento backend com Python, APIs modernas com FastAPI,
-                aplicações web com Django e Streamlit, automação de processos,
-                integração com IA, chatbots e agentes inteligentes.
-            </div>
-            <div class="badge-row badge-row-top">
-                <span class="tag-badge">Backend Python</span>
-                <span class="tag-badge">FastAPI</span>
-                <span class="tag-badge">Django</span>
-                <span class="tag-badge">Streamlit</span>
-                <span class="tag-badge">Automação</span>
-                <span class="tag-badge">IA aplicada</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
-    st.markdown("""
-    <div class="action-card card-compact">
-        <div class="section-title">Ações rápidas</div>
-        <div class="action-grid">
-            <a class="action-button" href="https://linkedin.com/in/william-silva-40888223a" target="_blank">LinkedIn</a>
-            <a class="action-button" href="mailto:williamllider@gmail.com">Enviar e-mail</a>
-            <a class="action-button" href="https://wa.me/5531998417976" target="_blank">WhatsApp</a>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("<div style='height:22px'></div>", unsafe_allow_html=True)
+    </footer>
+    """
+)
