@@ -132,6 +132,7 @@ EXPERIENCIAS = [
 ]
 
 CERTIFICADOS = [
+    # Backend & APIs (Geek University)
     ("Programação em Python — do básico ao avançado",
      "Geek University", "20/09/2021 — 14/03/2022", "64h"),
     ("Programação Web com Python e Django Framework",
@@ -140,12 +141,26 @@ CERTIFICADOS = [
      "Geek University", "28/05/2022 — 17/02/2025", "12h"),
     ("FastAPI — Websites Modernos e Assíncronos com Python",
      "Geek University", "29/01/2024 — 17/02/2024", "14h"),
-    ("SQLAlchemy: Essencial", "Geek University", "08/06/2023 — 21/02/2024", "15h"),
+    ("SQLAlchemy: Essencial", "Geek University",
+     "08/06/2023 — 21/02/2024", "15h"),
+    # Cloud
     ("Amazon Web Services: Essencial", "Geek University",
      "30/04/2025 — 22/06/2025", "12,5h"),
+    ("AWS Cloud — Fundamentos", "Amazon Web Services", "Concluído", "—"),
+    # Visualização de Dados
     ("Visualização de Dados com Python",
      "Geek University", "20/08/2025 — 25/08/2025", "6h"),
-    ("SQL e Power Query", "Empowerdata", "2021", "8,5h"),
+    ("Visualização de Dados", "Udemy", "Concluído", "—"),
+    # Power BI / DAX / Power Query (Empowerdata)
+    ("Fundamentos de Power BI", "Empowerdata", "Concluído", "8h"),
+    ("Fundamentos de DAX", "Empowerdata", "Concluído", "9h"),
+    ("Dominando o DAX", "Empowerdata", "Concluído", "—"),
+    ("Dominando Power Query", "Empowerdata", "Concluído", "5h"),
+    ("Design de Dashboards", "Empowerdata", "Concluído", "5h"),
+    ("Publicando Dashboards", "Empowerdata", "Concluído", "—"),
+    # SQL & Soft Skills
+    ("Noções de SQL", "Empowerdata", "Concluído", "—"),
+    ("Apresentações Corporativas", "Empowerdata", "Concluído", "—"),
 ]
 
 STACK = {
