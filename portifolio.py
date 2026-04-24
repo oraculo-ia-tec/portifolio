@@ -75,7 +75,7 @@ SERVICOS = [
 
 PROJETOS = [
     {
-        "titulo": "Cripto Bot",
+        "titulo": "Cripto Bolt",
         "desc": "Analista sênior de criptoativos com IA — DeFi, pools de liquidez "
                 "e estratégias de Day Trade com recomendações personalizadas.",
         "tags": ["Streamlit", "IA", "Finanças", "Análise"],
