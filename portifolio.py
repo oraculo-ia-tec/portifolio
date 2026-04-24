@@ -79,7 +79,7 @@ PROJETOS = [
         "desc": "Analista sênior de criptoativos com IA — DeFi, pools de liquidez "
                 "e estratégias de Day Trade com recomendações personalizadas.",
         "tags": ["Streamlit", "IA", "Finanças", "Análise"],
-        "url": "https://cripto-bot.streamlit.app",
+        "url": "https://cripto-bolt.streamlit.app/",
         "imagem": "perfil/crypto-bot.png",
         "categoria": "Fintech / IA",
     },
@@ -88,7 +88,7 @@ PROJETOS = [
         "desc": "Agente de IA para vendas online de carnes — sustenta centenas de "
                 "atendimentos simultâneos 24/7 sem pausas humanas.",
         "tags": ["Agente IA", "Vendas", "WhatsApp", "Atendimento"],
-        "url": "https://chef-delivery.streamlit.app",
+        "url": "https://chef-delivery-oraculo-ia-tec.streamlit.app/",
         "imagem": "perfil/chef-delivery.png",
         "categoria": "Vendas / Conversacional",
     },
@@ -97,7 +97,7 @@ PROJETOS = [
         "desc": "Especialista em análise de dados via IA — upload de arquivos, "
                 "perguntas em linguagem natural e diagnósticos objetivos.",
         "tags": ["IA", "Dados", "RAG", "Streamlit"],
-        "url": "https://oraculo-studant.streamlit.app/",
+        "url": "https://docs-ia.streamlit.app/",
         "imagem": "perfil/oraculo-analista-home1.png",
         "categoria": "Data / IA",
     },
