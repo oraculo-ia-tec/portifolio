@@ -355,6 +355,103 @@ html, body, [class*="css"] {
     border-right: 1px solid var(--border);
 }
 
+/* ---------- BANNER FIXO TOPO ---------- */
+@keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes borderPulse {
+    0%, 100% {
+        box-shadow:
+            0 0 0 0 rgba(34,211,238,0.0),
+            0 0 14px rgba(34,211,238,0.25),
+            inset 0 0 10px rgba(34,211,238,0.05);
+    }
+    50% {
+        box-shadow:
+            0 0 0 3px rgba(34,211,238,0.22),
+            0 0 28px rgba(168,85,247,0.35),
+            inset 0 0 18px rgba(59,130,246,0.08);
+    }
+}
+
+@keyframes textGlow {
+    0%, 100% { text-shadow: 0 0 8px rgba(34,211,238,0.4); }
+    50%       { text-shadow: 0 0 20px rgba(168,85,247,0.6), 0 0 40px rgba(34,211,238,0.3); }
+}
+
+@keyframes iconSpin {
+    0%   { transform: rotate(0deg) scale(1); }
+    50%  { transform: rotate(180deg) scale(1.2); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+.top-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 11px 24px;
+    background: linear-gradient(
+        270deg,
+        rgba(10,13,20,0.97) 0%,
+        rgba(34,211,238,0.18) 25%,
+        rgba(59,130,246,0.22) 50%,
+        rgba(168,85,247,0.18) 75%,
+        rgba(10,13,20,0.97) 100%
+    );
+    background-size: 300% 300%;
+    animation: gradientShift 5s ease infinite, borderPulse 2.4s ease-in-out infinite;
+    border-bottom: 1px solid rgba(56,189,248,0.28);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.top-banner-icon {
+    font-size: 1.1rem;
+    animation: iconSpin 6s linear infinite;
+    flex-shrink: 0;
+}
+
+.top-banner-text {
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: linear-gradient(135deg, #22d3ee, #3b82f6, #a855f7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textGlow 2.4s ease-in-out infinite;
+    white-space: nowrap;
+}
+
+.top-banner-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(168,85,247,0.14);
+    border: 1px solid rgba(168,85,247,0.35);
+    color: #d8b4fe;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+/* Compensar a altura do banner fixo */
+.banner-spacer {
+    height: 46px;
+}
+
 /* ---------- HERO ---------- */
 .hero {
     position: relative;
@@ -648,9 +745,10 @@ html, body, [class*="css"] {
     overflow: hidden;
     padding: 0;
 }
+/* Imagem menor: aspect-ratio reduzido de 16/10 para 16/7 */
 .project-media {
     width: 100%;
-    aspect-ratio: 16/10;
+    aspect-ratio: 16/7;
     overflow: hidden;
     border-bottom: 1px solid var(--border);
     background: linear-gradient(135deg, rgba(34,211,238,0.10), rgba(59,130,246,0.14));
@@ -668,7 +766,7 @@ html, body, [class*="css"] {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    aspect-ratio: 16/10;
+    aspect-ratio: 16/7;
 }
 .project-meta-top {
     padding: 18px 22px 0;
@@ -1002,14 +1100,31 @@ div[data-testid="stDownloadButton"] button:hover {
     .hero-stats { grid-template-columns: repeat(2, 1fr); }
     .cta-banner { grid-template-columns: 1fr; padding: 32px 24px; }
     .hero-photo-frame { max-width: 260px; margin: 0 auto; }
+    .top-banner-text { font-size: 0.78rem; }
+    .top-banner-badge { display: none; }
 }
 
 @media (max-width: 640px) {
     .block-container { padding: 1rem 0.9rem 2rem; }
     .hero-stats { grid-template-columns: 1fr 1fr; }
     .section-header { margin: 40px 0 20px; }
+    .top-banner { padding: 9px 14px; gap: 8px; }
+    .top-banner-text { font-size: 0.72rem; white-space: normal; text-align: center; }
+    .banner-spacer { height: 54px; }
 }
 </style>
+"""
+
+# =============================================================================
+# BANNER FIXO NO TOPO
+# =============================================================================
+TOP_BANNER = """
+<div class="top-banner" role="banner" aria-label="Informação acadêmica">
+    <span class="top-banner-icon" aria-hidden="true">🎓</span>
+    <span class="top-banner-text">Cursando Inteligência Artificial e Machine Learning — Faculdade Uniasselvi</span>
+    <span class="top-banner-badge">Em andamento</span>
+</div>
+<div class="banner-spacer"></div>
 """
 
 # =============================================================================
@@ -1038,6 +1153,7 @@ WHATSAPP_FLOAT = """
 """
 
 st.html(CSS)
+st.html(TOP_BANNER)
 st.html(WHATSAPP_FLOAT)
 
 # =============================================================================
