@@ -1,4 +1,4 @@
-﻿import base64
+import base64
 from html import escape
 from pathlib import Path
 
@@ -109,6 +109,24 @@ PROJETOS = [
         "url": "#",
         "imagem": "perfil/agente-email.png",
         "categoria": "Automação / IA",
+    },
+    {
+        "titulo": "Hipnus Cosméticos",
+        "desc": "Loja virtual inteligente de cosméticos com catálogo interativo, "
+                "experiência de compra guiada por IA e atendimento personalizado ao cliente.",
+        "tags": ["Streamlit", "E-commerce", "IA", "Cosméticos"],
+        "url": "https://hipnus-cosmeticos.streamlit.app/",
+        "imagem": "perfil/hipnus-cosmeticos.png",
+        "categoria": "E-commerce / IA",
+    },
+    {
+        "titulo": "Doctor PC",
+        "desc": "Assistente técnico inteligente para diagnóstico e suporte de computadores — "
+                "identifica problemas, orienta soluções e agiliza o atendimento de TI.",
+        "tags": ["Streamlit", "IA", "Suporte TI", "Diagnóstico"],
+        "url": "https://doctor-pc.streamlit.app/",
+        "imagem": "perfil/doctor-pc.png",
+        "categoria": "Suporte TI / IA",
     },
 ]
 
